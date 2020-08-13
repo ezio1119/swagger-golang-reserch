@@ -19,7 +19,7 @@ import (
 	//
 	//    sw "github.com/myname/myrepo/go"
 	//
-	sw "app/go"
+	sw "./go"
 )
 
 func main() {
