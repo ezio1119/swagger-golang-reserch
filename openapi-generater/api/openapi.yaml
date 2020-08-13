@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/)
+    or HTML.
+  title: Sample API
+  version: 0.1.9
+servers:
+- description: Optional server description, e.g. Main (production) server
+  url: http://api.example.com/v1
+- description: Optional server description, e.g. Internal staging server for testing
+  url: http://staging-api.example.com
+paths:
+  /users/{userId}:
+    get:
+      parameters:
+      - description: The ID of the user to return.
+        explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          format: int64
+          minimum: 1
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+        "400":
+          description: The specified user ID is invalid (not a number).
+        "404":
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error
+      summary: Returns a user by ID.
+  /users:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "201":
+          description: Created
+      summary: Creates a new user.
+components:
+  schemas:
+    User:
+      example:
+        name: name
+        id: 0
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      - name
